@@ -7,14 +7,15 @@ let timeOnline = {};
 export const connectToSocket = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: "*",
+      origin: "https://video-meeting-frontend-9t2j.onrender.com",
       methods: ["GET", "POST"],
-      allowedHeaders: "*",
       credentials: true,
     },
+     transports: ["websocket", "polling"]
   });
 
   io.on("connection", (socket) => {
+     console.log("User connected:", socket.id);
     socket.on("join-call", (path) => {
       if (connections[path] === undefined) {
         connections[path] = [];
